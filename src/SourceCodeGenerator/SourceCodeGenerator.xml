@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SourceCodeGenerator</name>
+    </assembly>
+    <members>
+        <member name="T:SourceCodeGenerator.App">
+            <summary>
+            Interaction logic for App.xaml.
+            </summary>
+            <summary>
+            App
+            </summary>
+        </member>
+        <member name="M:SourceCodeGenerator.App.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="M:SourceCodeGenerator.App.Main">
+            <summary>
+            Application Entry Point.
+            </summary>
+        </member>
+        <member name="T:SourceCodeGenerator.MainWindow">
+            <summary>
+            Interaction logic for MainWindow.xaml.
+            </summary>
+            <summary>
+            MainWindow
+            </summary>
+        </member>
+        <member name="M:SourceCodeGenerator.MainWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:SourceCodeGenerator.SelectField">
+            <summary>
+            Interaction logic for SelectField.xaml.
+            </summary>
+            <summary>
+            SelectField
+            </summary>
+        </member>
+        <member name="M:SourceCodeGenerator.SelectField.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+    </members>
+</doc>
