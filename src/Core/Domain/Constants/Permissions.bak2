@@ -54,27 +54,5 @@ namespace DN.WebApi.Domain.Constants
             public const string Update = "Permissions.Companys.Update";
             public const string Remove = "Permissions.Companys.Remove";
         }
-
-        [DisplayName("Note")]
-        [Description("Notes Permissions")]
-        public static class Notes
-        {
-            public const string View = "Permissions.Notes.View";
-            public const string ListAll = "Permissions.Notes.ViewAll";
-            public const string Register = "Permissions.Notes.Register";
-            public const string Update = "Permissions.Notes.Update";
-            public const string Remove = "Permissions.Notes.Remove";
-        }
-
-        [DisplayName("Person")]
-        [Description("Persons Permissions")]
-        public static class Persons
-        {
-            public const string View = "Permissions.Persons.View";
-            public const string ListAll = "Permissions.Persons.ViewAll";
-            public const string Register = "Permissions.Persons.Register";
-            public const string Update = "Permissions.Persons.Update";
-            public const string Remove = "Permissions.Persons.Remove";
-        }
     }
 }

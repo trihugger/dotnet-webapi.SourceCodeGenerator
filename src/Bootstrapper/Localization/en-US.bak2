@@ -13,9 +13,5 @@
 "entity.notfound":"{0} {1} Not Found.",
 "product.alreadyexists":"Product {0} already Exists.",
 "company.alreadyexists":"Company {0} already Exists.",
-"company.notfound":"Company {0} not Found.",
-"note.alreadyexists":"Note {0} already Exists.",
-"note.notfound":"Note {0} not Found.",
-"person.alreadyexists":"Person {0} already Exists.",
-"person.notfound":"Person {0} not Found."
+"company.notfound":"Company {0} not Found."
 }

@@ -2,7 +2,6 @@ using DN.WebApi.Application.Abstractions.Services.General;
 using DN.WebApi.Application.Abstractions.Services.Identity;
 using DN.WebApi.Domain.Contracts;
 using DN.WebApi.Domain.Entities.Catalog;
-using DN.WebApi.Domain.Entities.CRM;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Data;
@@ -28,9 +27,6 @@ namespace DN.WebApi.Infrastructure.Persistence
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Brand> Brands { get; set; }
-        public DbSet<Company> Companys { get; set; }
-        public DbSet<Note> Notes { get; set; }
-        public DbSet<Person> Persons { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

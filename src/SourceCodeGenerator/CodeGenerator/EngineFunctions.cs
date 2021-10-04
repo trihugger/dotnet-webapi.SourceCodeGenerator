@@ -26,7 +26,7 @@ namespace SourceCodeGenerator.CodeGenerator
 
         // Determine the base directory of this project and create a relative path to the folder there all your projects will live under.
         private static readonly string AppPath = AppDomain.CurrentDomain.BaseDirectory;
-        private static readonly string RelativePath = Path.Combine(AppPath, @"..\..\..\..\src\"); // Define This based on your project
+        private static readonly string RelativePath = Path.Combine(AppPath, @"..\..\..\..\"); // Define This based on your project
         private static readonly string[] ExcludeModels = { "Tenant", "Brand", "Product" };
 
         public static string GetModelNameSpace()
