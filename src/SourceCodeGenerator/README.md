@@ -10,7 +10,8 @@ Step 4 - Run and test and confirm its correct
 PROPERTIES FROM ENGINE
     private string _appname = string.Empty; // Name of the Application. e.g. BlazorHero, or whatever name you gave your project when creating it.
     private string _modelnamespace = string.Empty; // Name of your Domain ModelInfo name, this is used to extract your base namespace for customization
-    public string[] ExcludeProps = { "CreatedOn", "CreatedBy", "LastModifiedOn", "LastModifiedBy", "TenantKey" }; // List of Properties to exclude from code generator. i.e. Auditable properties because they are handled in the code already
+    public string[] SuperExcludeProps = { "TenantKey" }; // List of Properties to exclude from code generator absolutely for all
+    public string[] AllExcludeProps = { "CreatedOn", "CreatedBy", "LastModifiedOn", "LastModifiedBy", "TenantKey", "DeletedOn", "DeletedBy" }; // List of Properties to exclude from code generator. i.e. Auditable properties because they are handled in the code already
     public IList<PropertyOption> PropertyOptions = new List<PropertyOption>(); // List of all properties in the model being generated.
     public IList<PropertyOption> AppModelOptions = new List<PropertyOption>(); // List of all App Models in this model. App Models are 1-to-1 models we will be linking
     public IList<PropertyOption> AppModelChildOptions = new List<PropertyOption>(); // List of all App Models that is a child to a 1-to-manu relation in which this model is a child to.

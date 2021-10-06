@@ -25,7 +25,7 @@ namespace SourceCodeGenerator.CodeTemplates
             _codefolder = @$"Shared\Shared.DTOs\";
             string fileName = @$"{_model.Name}Dto.cs";
             _category = string.IsNullOrEmpty(_modelInfo.Category) ? string.Empty : $@".{_modelInfo.Category}";
-            _properties = _engine.GetProperties(ExcludeAppModels: true, ExcludeCollections: true);
+            _properties = _engine.GetProperties(ExcludeAllProperties: false, ExcludeAppModels: true, ExcludeCollections: true);
 
             string rootPath = EngineFunctions.GetApplicationPath();
             string codePath = @$"{rootPath}{_codefolder}" + (string.IsNullOrEmpty(_modelInfo.Category) ? @$"\" : @$"\{_modelInfo.Category}\");

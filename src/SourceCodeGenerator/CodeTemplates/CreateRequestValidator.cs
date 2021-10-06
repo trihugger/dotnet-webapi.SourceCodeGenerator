@@ -25,7 +25,7 @@ namespace SourceCodeGenerator.CodeTemplates
             _codefolder = @$"Core\Application\Validators\";
             string fileName = @$"Create{_model.Name}RequestValidator.cs";
             _category = string.IsNullOrEmpty(_modelInfo.Category) ? string.Empty : $@".{_modelInfo.Category}";
-            _properties = _engine.GetValidationRules();
+            _properties = _engine.GetValidationRules(IncludeId: false);
 
             string rootPath = EngineFunctions.GetApplicationPath();
             string codePath = @$"{rootPath}{_codefolder}" + (string.IsNullOrEmpty(_modelInfo.Category) ? @$"\" : @$"\{_modelInfo.Category}\");

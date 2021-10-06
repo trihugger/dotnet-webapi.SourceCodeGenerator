@@ -14,7 +14,8 @@ namespace SourceCodeGenerator.CodeGenerator
         #region PROPERTIES
         private string _appname = string.Empty; // Name of the Application. e.g. BlazorHero, or whatever name you gave your project when creating it.
         private string _modelnamespace = string.Empty; // Name of your Domain ModelInfo name, this is used to extract your base namespace for customization
-        public string[] ExcludeProps = { "CreatedOn", "CreatedBy", "LastModifiedOn", "LastModifiedBy", "TenantKey", "DeletedOn", "DeletedBy" }; // List of Properties to exclude from code generator. i.e. Auditable properties because they are handled in the code already
+        public string[] SuperExcludeProps = { "TenantKey" }; // List of Properties to exclude from code generator. i.e. Auditable properties because they are handled in the code already
+        public string[] AllExcludeProps = { "CreatedOn", "CreatedBy", "LastModifiedOn", "LastModifiedBy", "TenantKey", "DeletedOn", "DeletedBy" }; // List of Properties to exclude from code generator. i.e. Auditable properties because they are handled in the code already
         public IList<PropertyOption> PropertyOptions = new List<PropertyOption>(); // List of all properties in the model being generated.
         public IList<PropertyOption> AppModelOptions = new List<PropertyOption>(); // List of all App Models in this model. App Models are 1-to-1 models we will be linking
         public IList<PropertyOption> AppModelChildOptions = new List<PropertyOption>(); // List of all App Models that is a child to a 1-to-manu relation in which this model is a child to.
@@ -78,7 +79,7 @@ namespace SourceCodeGenerator.CodeGenerator
             List<string> fields = new List<string>();
             foreach(var item in PropertyOptions)
             {
-                if (item.PropertTypeName.Equals("string") && !ExcludeProps.Contains(item.Name)) fields.Add(item.Name);
+                if (item.PropertTypeName.Equals("string") && !AllExcludeProps.Contains(item.Name)) fields.Add(item.Name);
             }
 
             if (fields.Count() > 1)
@@ -100,7 +101,7 @@ namespace SourceCodeGenerator.CodeGenerator
         #endregion
 
         #region CODE GENERATION AID FUNCTIONS
-        public string GetProperties(bool ExcludeCollections = false, bool ExcludeAppModelsIds = false, bool ExcludeAppModels = false, bool UseDtosForAppModels = true)
+        public string GetProperties(bool ExcludeAllProperties = true, bool ExcludeCollections = false, bool ExcludeAppModelsIds = false, bool ExcludeAppModels = false, bool UseDtosForAppModels = true)
         {
             // Create Properties for the model - used in the cretion of the data object
             // Used in Controller, FeatureXCommand files, Manager, MappedProfile, and Routes.
@@ -112,7 +113,7 @@ namespace SourceCodeGenerator.CodeGenerator
 
                 string propertyTypeName = property.PropertTypeName;
 
-                if (!ExcludeProps.Contains(property.Name))
+                if (!(ExcludeAllProperties && AllExcludeProps.Contains(property.Name)) || SuperExcludeProps.Contains(property.Name))
                 {
                     if (propertyType.IsGenericType)
                     {
@@ -182,7 +183,7 @@ namespace SourceCodeGenerator.CodeGenerator
                 Console.WriteLine(typeName);
 
                 // Exclude App Models, Collections, and Properties in the exclusion list
-                if (!ExcludeProps.Contains(property.Name) &&
+                if (!AllExcludeProps.Contains(property.Name) &&
                     !(ExcludeAppModels && property.IsAppModel) &&
                     !(ExcludeCollections && property.IsCollection) &&
                     !(ExcludeAppModelsIds && EngineFunctions.IsAppModelId(property.Name)) && property.CanWrite)
@@ -200,15 +201,16 @@ namespace SourceCodeGenerator.CodeGenerator
             return properties.ToString().TrimEnd().TrimEnd(',');
         }
 
-        public string GetValidationRules()
+        public string GetValidationRules(bool IncludeId = true)
         {
             StringBuilder iProperties = new StringBuilder();
 
             foreach (PropertyOption property in PropertyOptions)
             {
-                if(!ExcludeProps.Contains(property.Name) && !property.IsAppModel && !property.IsCollection)
+                if(!AllExcludeProps.Contains(property.Name) && !property.IsAppModel && !property.IsCollection)
                 {
                     string iproperty = @$"            RuleFor(p => p.{property.Name})";
+                    string ivalidations = string.Empty;
 
                     // Fluent Built-in Validators https://docs.fluentvalidation.net/en/latest/built-in-validators.html
 
@@ -216,42 +218,45 @@ namespace SourceCodeGenerator.CodeGenerator
                     // MaximumLength is set to 75 as default
                     if (property.PropertyType == typeof(string))
                     {
-                        iproperty += ".MaximumLength(75)";
+                        ivalidations += ".MaximumLength(75)";
                     }
 
                     // Int/Double/Float
                     // Greater than or equal to 0
                     if (property.PropertyType == typeof(int) || property.PropertyType == typeof(double) || property.PropertyType == typeof(float) || property.PropertyType == typeof(decimal))
                     {
-                        iproperty += ".GreaterThanOrEqualTo(0)";
+                        ivalidations += ".GreaterThanOrEqualTo(0)";
                     }
 
                     // DateTime should be greater or equal to today (exception would be for DoB or DoD)
                     if (property.PropertyType == typeof(DateTime))
                     {
-                        iproperty += ".GreaterThanOrEqualTo(DateTime.Today)"; // TODO: check if this works??
+                        ivalidations += ".GreaterThanOrEqualTo(DateTime.Today)"; // TODO: check if this works??
                     }
 
                     // Skipping all other types
 
                     // Id's or All with required should be
                     // .NotNull() or .NotEmpty depending if it is object or native
-                    if (property.Name.ToLower().Equals("id") || property.Required)
+                    if ((property.Name.ToLower().Equals("id") && IncludeId) || property.Required)
                     {
                         if (property.PropertyType.Namespace!.StartsWith("System"))
                         {
-                            iproperty += ".NotEmpty()";
+                            ivalidations += ".NotEmpty()";
                         }
                         else
                         {
-                            iproperty += ".NotNull()";
+                            ivalidations += ".NotNull()";
                         }
                     }
 
-                    iproperty += @$";
+                    if(ivalidations.Length > 0)
+                    {
+                        iproperty += ivalidations;
+                        iproperty += @$";
 ";
-
-                    iProperties.Append(iproperty);
+                        iProperties.Append(iproperty);
+                    }
                 }
             }
 

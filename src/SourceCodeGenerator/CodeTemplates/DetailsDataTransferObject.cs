@@ -23,7 +23,7 @@ namespace SourceCodeGenerator.CodeTemplates
             _codefolder = @$"Shared\Shared.DTOs\";
             string fileName = @$"{_model.Name}DetailsDto.cs";
             _category = string.IsNullOrEmpty(_modelInfo.Category) ? string.Empty : $@".{_modelInfo.Category}";
-            _properties = _engine.GetProperties(ExcludeAppModelsIds: true); // Fix here - could we have a recursive engine reload we might need to make sure its not overriding the original instance
+            _properties = _engine.GetProperties(ExcludeAllProperties: false, ExcludeAppModelsIds: true);
 
             string rootPath = EngineFunctions.GetApplicationPath();
             string codePath = @$"{rootPath}{_codefolder}" + (string.IsNullOrEmpty(_modelInfo.Category) ? @$"\" : @$"\{_modelInfo.Category}\");

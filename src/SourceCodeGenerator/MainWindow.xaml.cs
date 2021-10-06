@@ -435,7 +435,7 @@ namespace SourceCodeGenerator
                 Console.WriteLine(typeName);
 
                 // Exclude App Models, Collections, and Properties in the exclusion list
-                if (!engine.ExcludeProps.Contains(property.Name) &&
+                if (!engine.AllExcludeProps.Contains(property.Name) &&
                     !property.IsAppModel &&
                     !property.IsCollection &&
                     property.CanWrite)
@@ -457,7 +457,7 @@ namespace SourceCodeGenerator
                 string namea = property.Name.ToLower();
 
                 // Exclude App Models, Collections, and Properties in the exclusion list
-                if (!engine.ExcludeProps.Contains(property.Name) &&
+                if (!engine.AllExcludeProps.Contains(property.Name) &&
                     !property.IsAppModel &&
                     !property.IsCollection &&
                     property.CanWrite)
