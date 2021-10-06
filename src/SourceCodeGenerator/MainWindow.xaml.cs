@@ -152,10 +152,8 @@ namespace SourceCodeGenerator
             {
                 // TODO: ask for name of migration
                 string migrationName = "NewMigration" + DateTime.Now.ToString("MM-dd-yyyy_hh_mm_ss");
-                processStartInfo.Arguments = $"Add-Migration {migrationName} -Context ApplicationDbContext -Output-dir src\\Infrastructure"; // Powershell
-                processStartInfo.Arguments = $"dotnet ef migrations add {migrationName} --context ApplicationDbContext --output-dir src\\Infrastructure"; // CLI aka CMD
-
-                // dotnet ef migrations add SCG_MigrationTest --context ApplicationDbContext --project DN.WebApi.Infrastructure --provider SqlServer
+                processStartInfo.Arguments = $"Add-Migration {migrationName} -Context ApplicationDbContext -Project Migrators.MSSQL -StartupProject Bootstrapper -Args \"--provider SqlServer\""; // Powershell
+                processStartInfo.Arguments = $"dotnet ef migrations add {migrationName} -c ApplicationDbContext -p Migrators.MSSQL -s Bootstrapper --provider SqlServer"; // CLI aka CMD
 
                 // can add the --project ../Migrators.[MSSQL|MySQL|PostgreSql] -- --provider [SqlServer/MySql/PostgreSQL] to specify projects for migration in CLI
                 // -Args "--provider SqlServer" - example for  powershell
@@ -384,6 +382,10 @@ namespace SourceCodeGenerator
         {{
 {properties}
         }}
+
+        private {engine.Model.Name}()
+        {{
+        }}
 ");
 
             StringBuilder iUpdate = new StringBuilder();
@@ -513,7 +515,7 @@ namespace SourceCodeGenerator
             string rootPath = EngineFunctions.GetApplicationPath();
             string codePath = @$"{rootPath}{codefolder}";
             string filePath = codePath + fileName;
-            LocalizerFile localizer = new LocalizerFile(filePath);
+            LocalizerTools localizer = new LocalizerTools(filePath);
             localizer.AddEntry($@"{engine.Model.Name.ToLower()}.alreadyexists", $@"{engine.Model.Name} {{0}} already Exists.");
             localizer.AddEntry($@"{engine.Model.Name.ToLower()}.notfound", $@"{engine.Model.Name} {{0}} not Found.");
             localizer.SaveLocalizer(BackupFile);

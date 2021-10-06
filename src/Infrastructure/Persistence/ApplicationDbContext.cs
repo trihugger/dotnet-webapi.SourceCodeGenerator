@@ -31,6 +31,7 @@ namespace DN.WebApi.Infrastructure.Persistence
         public DbSet<Company> Companys { get; set; }
         public DbSet<Note> Notes { get; set; }
         public DbSet<Person> Persons { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

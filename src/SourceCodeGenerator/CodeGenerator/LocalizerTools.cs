@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace SourceCodeGenerator.CodeGenerator
 {
-    public class LocalizerFile
+    public class LocalizerTools
     {
         private string FilePath { get; set; }
         private Dictionary<string, string> LocalizerDictionary { get; set; } = new Dictionary<string, string>();
 
-        public LocalizerFile(string filePath)
+        public LocalizerTools(string filePath)
         {
             FilePath = filePath;
             string localizationJson = File.ReadAllText(filePath);

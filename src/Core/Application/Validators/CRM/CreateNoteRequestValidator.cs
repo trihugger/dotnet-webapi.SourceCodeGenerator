@@ -11,9 +11,7 @@ namespace DN.WebApi.Application.Validators.CRM
         public CreateNoteRequestValidator()
         {
             RuleFor(p => p.Subject).MaximumLength(75).NotEmpty();
-            RuleFor(p => p.Message).MaximumLength(75).NotEmpty();
-            RuleFor(p => p.PersonId);
-            RuleFor(p => p.Id).NotEmpty();
+            RuleFor(p => p.Message).MaximumLength(255).NotEmpty();
         }
     }
 }

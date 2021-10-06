@@ -11,7 +11,6 @@ namespace DN.WebApi.Application.Validators.CRM
         public CreateCompanyRequestValidator()
         {
             RuleFor(p => p.CompanyName).MaximumLength(75).NotEmpty();
-            RuleFor(p => p.Id).NotEmpty();
         }
     }
 }
