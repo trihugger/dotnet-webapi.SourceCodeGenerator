@@ -9,5 +9,9 @@ namespace DN.WebApi.Shared.DTOs.CRM
     {
         public Guid Id { get; set; }
         public string CompanyName { get; set; }
+        public string TenantKey { get; set; }
+        public Guid CreatedBy { get; set; }
+        public DateTime CreatedOn { get; set; }
+        public Guid LastModifiedBy { get; set; }
     }
 }

@@ -11,7 +11,9 @@ namespace DN.WebApi.Shared.DTOs.CRM
         public string Name { get; set; }
         public int Age { get; set; }
         public DateTime DateOfBirth { get; set; }
+        public string TenantKey { get; set; }
         public CompanyDto Company { get; set; }
         public List<NoteDto> Notes { get; set; }
+        public DateTime CreatedOn { get; set; }
     }
 }

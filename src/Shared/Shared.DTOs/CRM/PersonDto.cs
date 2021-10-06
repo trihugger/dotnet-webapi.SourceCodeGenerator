@@ -11,6 +11,10 @@ namespace DN.WebApi.Shared.DTOs.CRM
         public string Name { get; set; }
         public int Age { get; set; }
         public DateTime DateOfBirth { get; set; }
+        public string TenantKey { get; set; }
         public Guid CompanyId { get; set; }
+        public Guid CreatedBy { get; set; }
+        public DateTime CreatedOn { get; set; }
+        public Guid LastModifiedBy { get; set; }
     }
 }

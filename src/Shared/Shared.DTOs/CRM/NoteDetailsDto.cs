@@ -11,5 +11,7 @@ namespace DN.WebApi.Shared.DTOs.CRM
         public string Subject { get; set; }
         public string Message { get; set; }
         public PersonDto Person { get; set; }
+        public string TenantKey { get; set; }
+        public DateTime CreatedOn { get; set; }
     }
 }
